@@ -1,28 +1,11 @@
 import { Elysia } from "elysia";
 import "dotenv/config";
-import { requireAuth, authenticateUser } from "./middleware/auth";
+import { db } from "./db";
 
 const app = new Elysia()
-  .get("/", () => ({ message: "API is running" }))
-  .get("/protected", async ({ headers, set }) => {
-    try {
-      const user = await authenticateUser(headers.authorization || "");
-      return {
-        message: "Hello authenticated user!",
-        user: {
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-        },
-      };
-    } catch (error) {
-      set.status = 401;
-      return { error: "Authentication failed" };
-    }
+  .get("/", async () => {
+    return !!(await db.execute("SELECT 1;")).rowCount;
   })
-  // Example of using the auth middleware for protected routes
-  .use(requireAuth)
-  .get("/me", ({ user }) => user)
   .listen(3000);
 
 console.log(
