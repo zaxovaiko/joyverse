@@ -1,4 +1,4 @@
-import { usersTable } from "@/db/schema";
+import type { usersTable } from "@/db/schema";
 import { LRUCache } from "lru-cache";
 
 export type UserRecord = typeof usersTable.$inferSelect;

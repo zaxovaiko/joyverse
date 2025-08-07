@@ -29,4 +29,9 @@ export const config = [
   {
     ignores: ["dist/**"],
   },
+  {
+    rules: {
+      "@typescript-eslint/consistent-type-imports": "error"
+    }
+  }
 ];
