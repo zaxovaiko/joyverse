@@ -2,8 +2,8 @@
   "name": "app",
   "version": "1.0.50",
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "check-types": "bun run --check"
+    "dev": "tsx --watch src/index.ts",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
