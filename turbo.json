@@ -16,7 +16,7 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["DATABASE_URL"]
+      "env": ["DATABASE_URL", "SUPABASE_URL", "SUPABASE_ANON_KEY"]
     }
   }
 }
