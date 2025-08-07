@@ -1,5 +1,7 @@
 import { RPCHandler } from "@orpc/server/fetch";
 import { CORSPlugin, RequestHeadersPlugin } from "@orpc/server/plugins";
+import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
+import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 import { router } from "@/router";
 
 const handler = new RPCHandler(router, {
@@ -8,6 +10,15 @@ const handler = new RPCHandler(router, {
       allowMethods: ["GET", "HEAD", "PUT", "POST", "DELETE", "PATCH"],
     }),
     new RequestHeadersPlugin(),
+    new OpenAPIReferencePlugin({
+      schemaConverters: [new ZodToJsonSchemaConverter()],
+      specGenerateOptions: {
+        info: {
+          title: "Joyverse API",
+          version: "1.0.0",
+        },
+      },
+    }),
   ],
 });
 
