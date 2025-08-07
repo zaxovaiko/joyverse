@@ -8,14 +8,16 @@ import { UserSchema } from "@repo/zod-schemas";
 
 const base = os.use(loggerMiddleware);
 
+const health = base.handler(async () => {
+  const ok = await db.execute(sql`SELECT 1`);
+  if (!ok) {
+    throw new ORPCError("Database connection failed");
+  }
+  return { status: "ok" };
+});
+
 export const router = {
-  health: base.handler(async () => {
-    const ok = await db.execute(sql`SELECT 1`);
-    if (!ok) {
-      throw new ORPCError("Database connection failed");
-    }
-    return { status: "ok" };
-  }),
+  health,
   users: {
     create: base.input(z.object({ name: z.string() })).handler(async () => {
       //
@@ -43,5 +45,10 @@ export const router = {
       .handler(async () => {
         //
       }),
+  },
+  chats: {
+    list: base.use(authMiddleware).handler(async ({ context }) => {
+      // TODO: Implement chat listing (paginated) using `user` from `context`
+    }),
   },
 };
