@@ -50,13 +50,37 @@ export async function authenticateUser(authHeader: string): Promise<UserRecord> 
   return user;
 }
 
-export const authMiddleware = new Elysia({ name: "auth" })
-  .derive(async ({ headers, set }) => {
+// Reusable auth middleware plugin following Elysia patterns
+export const authMiddleware = (app: Elysia) =>
+  app.derive(async ({ headers, set }) => {
     try {
       const user = await authenticateUser(headers.authorization || "");
       return { user };
     } catch (error) {
       set.status = 401;
-      throw error;
+      return { error: "Authentication failed" };
+    }
+  });
+
+// Alternative middleware for optional authentication
+export const optionalAuthMiddleware = (app: Elysia) =>
+  app.derive(async ({ headers }) => {
+    try {
+      const user = await authenticateUser(headers.authorization || "");
+      return { user };
+    } catch (error) {
+      return { user: null };
+    }
+  });
+
+// Guard middleware for protected routes
+export const requireAuth = (app: Elysia) =>
+  app.derive(async ({ headers, set }) => {
+    try {
+      const user = await authenticateUser(headers.authorization || "");
+      return { user };
+    } catch (error) {
+      set.status = 401;
+      throw new Error("Authentication required");
     }
   });
