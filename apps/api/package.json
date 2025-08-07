@@ -2,10 +2,11 @@
   "name": "app",
   "version": "1.0.50",
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "check-types": "bun run --check"
+    "dev": "tsx --watch src/index.ts",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@supabase/supabase-js": "2.45.4",
     "dotenv": "17.2.1",
     "drizzle-orm": "0.44.4",
     "elysia": "1.3.8",
