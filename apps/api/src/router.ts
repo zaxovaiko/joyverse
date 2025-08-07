@@ -4,6 +4,7 @@ import { sql } from "drizzle-orm";
 import { authMiddleware } from "@/middlewares/auth";
 import { loggerMiddleware } from "@/middlewares/logger";
 import z from "zod";
+import { UserSchema } from "@repo/zod-schemas";
 
 const base = os.use(loggerMiddleware);
 
@@ -28,5 +29,19 @@ export const router = {
     delete: base.use(authMiddleware).handler(async () => {
       //
     }),
+    onboard: base
+      .use(authMiddleware)
+      .input(
+        UserSchema.pick({
+          firstName: true,
+          lastName: true,
+          city: true,
+          country: true,
+          age: true,
+        }),
+      )
+      .handler(async () => {
+        //
+      }),
   },
 };

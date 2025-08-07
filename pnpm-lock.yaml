@@ -32,6 +32,9 @@ importers:
       '@orpc/zod':
         specifier: 1.7.10
         version: 1.7.10(@orpc/contract@1.7.10)(@orpc/server@1.7.10(ws@8.18.3))(ws@8.18.3)(zod@4.0.15)
+      '@repo/zod-schemas':
+        specifier: workspace:*
+        version: link:../../packages/zod-schemas
       '@supabase/supabase-js':
         specifier: 2.45.4
         version: 2.45.4
@@ -95,6 +98,22 @@ importers:
         version: 8.39.0(eslint@9.32.0)(typescript@5.9.2)
 
   packages/typescript-config: {}
+
+  packages/zod-schemas:
+    dependencies:
+      typescript:
+        specifier: 5.9.2
+        version: 5.9.2
+      zod:
+        specifier: 4.0.15
+        version: 4.0.15
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
 
 packages:
 

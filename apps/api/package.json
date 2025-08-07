@@ -14,7 +14,8 @@
     "drizzle-orm": "0.44.4",
     "lru-cache": "11.1.0",
     "pino": "9.8.0",
-    "zod": "4.0.15"
+    "zod": "4.0.15",
+    "@repo/zod-schemas": "workspace:*"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
