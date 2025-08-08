@@ -67,6 +67,12 @@ export const messagesTable = pgTable("messages", {
       onDelete: "cascade",
       onUpdate: "cascade",
     }),
+  chatId: uuid("chat_id")
+    .notNull()
+    .references(() => chatsTable.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
   content: text("content").notNull(),
   createdAt,
   updatedAt,

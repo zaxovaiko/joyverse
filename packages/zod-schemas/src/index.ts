@@ -11,3 +11,10 @@ export const UserSchema = z.object({
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
+
+export const SendMessageSchema = z.object({
+  chatId: z.uuid(),
+  message: z.string().trim().min(1).max(500),
+});
+
+export type SendMessageInput = z.infer<typeof SendMessageSchema>;

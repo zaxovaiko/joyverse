@@ -2,9 +2,15 @@ import { userCache } from "@/cache";
 import { db } from "@/db";
 import { usersTable } from "@/db/schema";
 import { supabase } from "@/lib/supabase";
-import { os } from "@orpc/server";
+import { ORPCError, os } from "@orpc/server";
 import type { RequestHeadersPluginContext } from "@orpc/server/plugins";
+import type { User } from "@supabase/supabase-js";
 import { eq } from "drizzle-orm";
+
+export type AppContext = {
+  user: typeof usersTable.$inferSelect;
+  supabaseUser: User;
+};
 
 export const authMiddleware = os
   .$context<RequestHeadersPluginContext>()
@@ -12,11 +18,11 @@ export const authMiddleware = os
     const authHeader = context.reqHeaders?.get("Authorization");
     const token = authHeader?.replace(/^Bearer\s+/i, "");
     if (!token) {
-      throw new Error("Unauthorized: No token provided");
+      throw new ORPCError("Unauthorized: No token provided");
     }
     const supabaseUser = await supabase.auth.getUser(token);
     if (!supabaseUser.data.user) {
-      throw new Error("Unauthorized: Invalid token");
+      throw new ORPCError("Unauthorized: Invalid token");
     }
 
     let user = userCache.get(token);
@@ -25,7 +31,7 @@ export const authMiddleware = os
         where: eq(usersTable.supabaseId, token),
       });
       if (!user) {
-        throw new Error("Unauthorized: Invalid token");
+        throw new ORPCError("Unauthorized: Invalid token");
       }
       userCache.set(token, user);
     }
