@@ -1,4 +1,4 @@
-import { timestamp, smallint, text, pgTable, uuid } from "drizzle-orm/pg-core";
+import { pgTable, smallint, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 const createdAt = timestamp("created_at", {
   mode: "date",

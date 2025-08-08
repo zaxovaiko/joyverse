@@ -1,7 +1,8 @@
+import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { RPCHandler } from "@orpc/server/fetch";
 import { CORSPlugin, RequestHeadersPlugin } from "@orpc/server/plugins";
-import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
+
 import { router } from "@/router";
 
 const handler = new RPCHandler(router, {

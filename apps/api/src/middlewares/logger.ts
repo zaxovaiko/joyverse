@@ -1,5 +1,5 @@
-import pino from "pino";
 import { os } from "@orpc/server";
+import pino from "pino";
 
 const logger = pino({
   level: "info",

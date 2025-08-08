@@ -1,9 +1,10 @@
-import { db } from "@/db";
-import { chatUsersTable } from "@/db/schema";
-import type { AppContext } from "@/middlewares/auth";
 import { ORPCError, os } from "@orpc/server";
 import type { SendMessageInput } from "@repo/zod-schemas";
 import { and, eq } from "drizzle-orm";
+
+import { db } from "@/db";
+import { chatUsersTable } from "@/db/schema";
+import type { AppContext } from "@/middlewares/auth";
 
 export const chatAccessMiddleware = os
   .$context<AppContext>()
